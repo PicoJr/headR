@@ -187,9 +187,6 @@ result (`out.html`):
 result (`out.html` on 1 column):
 
 <html>
-    <head>
-        <title>Header</title>
-    </head>
     <body>
         <table>
             <tr>
