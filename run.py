@@ -25,29 +25,37 @@ def parse_json(json_path) -> Tuple[int, List[Field]]:
         return bytes_per_line, fields
 
 
-def rows(content: List[Field], bytes_per_line) -> Row:
-    octet = 0
-    bits = 0
-    cells = []
-    remainder = 0
-    for field in content:
+def take_at_most(fields, bits):
+    total = 0
+    fields_used = []
+    fields_remaining = []
+    for field in fields:
         size = field.end - field.start + 1
-        bits_left_for_row = (bytes_per_line * 8) - bits
-        if size > bits_left_for_row:
-            remainder = size - bits_left_for_row
-            size = bits_left_for_row
-            assert remainder > 0
-        cells.append(Cell(field.name, size))
-        bits += size
-        if bits >= (bytes_per_line * 8):
-            bits = 0
-            yield Row(octet, octet * 8, cells)
-            octet += bytes_per_line
-            cells = []
-            if remainder > 0:
-                cells = [Cell(field.name, remainder)]
-    if cells:
+        left = bits - total
+        used = min(size, left)
+        if 0 < used < size:
+            fields_used.append(Field(field.name, field.start, field.end - used))
+            fields_remaining.append(Field(field.name, field.start + used, field.end))
+        elif used == size:
+            fields_used.append(field)
+        else:
+            fields_remaining.append(field)
+        total += used
+    return fields_used, fields_remaining
+
+
+def rows(content: List[Field], bytes_per_line) -> Row:
+    remaining = content
+    octet = 0
+    while remaining:
+        fields_used, fields_remaining = take_at_most(remaining, bytes_per_line * 8)
+        cells = []
+        for field in fields_used:
+            size = field.end - field.start + 1
+            cells.append(Cell(field.name, size))
         yield Row(octet, octet * 8, cells)
+        octet += bytes_per_line
+        remaining = fields_remaining
 
 
 def main():
