@@ -1,5 +1,5 @@
 import json
-import logging
+import argparse
 
 from collections import namedtuple
 from typing import List, Tuple
@@ -50,8 +50,13 @@ def rows(content: List[Field], bytes_per_line) -> Row:
         yield Row(octet, octet * 8, cells)
 
 
-if __name__ == "__main__":
-    bytes_per_line, fields = parse_json("res/rtp.json")
+def main():
+    parser = argparse.ArgumentParser(description="json header description to html")
+    parser.add_argument("json", help="json path")
+    parser.add_argument("--out", default="out.html", help="output path for html file")
+    args = parser.parse_args()
+
+    bytes_per_line, fields = parse_json(args.json)
     bytes_numbering = list(range(bytes_per_line))
     bits_numbering = list(range(bytes_per_line * 8))
     with open("templates/template.html") as file_:
@@ -61,4 +66,9 @@ if __name__ == "__main__":
             bits_numbering=bits_numbering,
             rows=list(rows(fields, bytes_per_line)),
         )
-        print(result)
+    with open(args.out, "w+") as out_html:
+        out_html.write(result)
+
+
+if __name__ == "__main__":
+    main()
