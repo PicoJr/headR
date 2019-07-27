@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="static/styles.css">
+<html>
+    <head>
+        <title>Header</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>Offsets</th>
+                <th>Octet</th>
+                {% for b in bytes_numbering %}
+                <th colspan = "8">
+                    {{ b }}
+                </th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Octet</th>
+                <th>Bit</th>
+                {% for b in bits_numbering %}
+                <td colspan = "1">
+                    {{ b }}
+                </td>
+                {% endfor %}
+            </tr>
+            {% for row in rows %}
+            <tr>
+                <td>
+                    {{ row.octet }}
+                </td>
+                <td>
+                    {{ row.bit }}
+                </td>
+                {% for cell in row.cells %}
+                    <td colspan="{{ cell.size  }}">
+                        {{ cell.name }}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

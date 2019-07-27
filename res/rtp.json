@@ -1,0 +1,50 @@
+{
+  "bytes": 4,
+  "fields": [
+    {
+      "name": "version",
+      "start": 0,
+      "end": 1
+    },
+    {
+      "name": "P",
+      "start": 2,
+      "end": 2
+    },
+    {
+      "name": "X",
+      "start": 3,
+      "end": 3
+    },
+    {
+      "name": "CC",
+      "start": 4,
+      "end": 7
+    },
+    {
+      "name": "M",
+      "start": 8,
+      "end": 8
+    },
+    {
+      "name": "PT",
+      "start": 9,
+      "end": 15
+    },
+    {
+      "name": "Sequence number",
+      "start": 16,
+      "end": 31
+    },
+    {
+      "name": "Timestamp",
+      "start": 32,
+      "end": 63
+    },
+    {
+      "name": "SSRC identifier",
+      "start": 64,
+      "end": 95
+    }
+  ]
+}
