@@ -15,17 +15,16 @@ Cell = namedtuple("Cell", "name size")
 Row = namedtuple("Row", "octet bit cells")
 
 
-def parse_json(json_path) -> Tuple[int, List[Field]]:
+def parse_json(json_path: str) -> List[Field]:
     with open(json_path) as json_data:
         data = json.load(json_data)
-        bytes_per_line = data["bytes"]
         fields = []
         for field in data["fields"]:
             fields.append(Field(field["name"], field["start"], field["end"]))
-        return bytes_per_line, fields
+        return fields
 
 
-def take_at_most(fields, bits):
+def take_at_most(fields: List[Field], bits: int) -> Tuple[List[Field], List[Field]]:
     total = 0
     fields_used = []
     fields_remaining = []
@@ -62,9 +61,11 @@ def main():
     parser = argparse.ArgumentParser(description="json header description to html")
     parser.add_argument("json", help="json path")
     parser.add_argument("--out", default="out.html", help="output path for html file")
+    parser.add_argument("-b", type=int, default=4, help="bytes per line")
     args = parser.parse_args()
 
-    bytes_per_line, fields = parse_json(args.json)
+    fields = parse_json(args.json)
+    bytes_per_line = args.b
     bytes_numbering = list(range(bytes_per_line))
     bits_numbering = list(range(bytes_per_line * 8))
     with open("templates/template.html") as file_:

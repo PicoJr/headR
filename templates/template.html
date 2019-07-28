@@ -9,22 +9,22 @@
             <tr>
                 <th>Offsets</th>
                 <th>Octet</th>
-                {% for b in bytes_numbering %}
+                {% for b in bytes_numbering -%}
                 <th colspan = "8">
                     {{ b }}
                 </th>
-                {% endfor %}
+                {% endfor -%}
             </tr>
             <tr>
                 <th>Octet</th>
                 <th>Bit</th>
-                {% for b in bits_numbering %}
+                {% for b in bits_numbering -%}
                 <td colspan = "1">
                     {{ b }}
                 </td>
-                {% endfor %}
+                {% endfor -%}
             </tr>
-            {% for row in rows %}
+            {% for row in rows -%}
             <tr>
                 <td>
                     {{ row.octet }}
@@ -32,13 +32,13 @@
                 <td>
                     {{ row.bit }}
                 </td>
-                {% for cell in row.cells %}
+                {% for cell in row.cells -%}
                     <td colspan="{{ cell.size  }}">
                         {{ cell.name }}
                     </td>
-                {% endfor %}
+                {% endfor -%}
             </tr>
-            {% endfor %}
+            {% endfor -%}
         </table>
     </body>
 </html>
