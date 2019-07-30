@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0efd6afde34f428d8a8406376bc8d067)](https://app.codacy.com/app/PicoJr/headR?utm_source=github.com&utm_medium=referral&utm_content=PicoJr/headR&utm_campaign=Badge_Grade_Dashboard)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # HeadR
