@@ -9,7 +9,7 @@ requires python >= 3.5
 
 ## Requirements
 
-* `jinja2`
+*   `jinja2`
 
 ## Install
 
